@@ -1,13 +1,8 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-                    "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-  	<script type="text/javascript" src="jquery-1.4.1.min.js"></script>
+  	<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
   <style>
-  li {
-	list-style-image: url("http://www.blogblog.com/tictac_blue/tictac_blue.gif");
-	/*padding-left: 10px;*/
-  }
   .block { 
     border: 2px solid #0090DF;
     background-color: #68BFEF;
@@ -21,84 +16,81 @@
   #divrc {
 	font-size:100%;
   }
-  
+  #divrc ul{
+	/*background: url(http://www.blogblog.com/tictac_blue/tictac_blue.gif) no-repeat 0 6px;*/
+	padding-left:1em;
+  }
   #divrc li{
-	/*text-indent:-1em;
-	list-style:none;*/
+	text-indent:-1em;	
+	list-style:none;
   }
-  #divrc .rcfold	{
-	/*margin-right:5px;*/
+  #divrc li.postList {
+	text-indent:0;
+	background: url(http://www.blogblog.com/tictac_blue/tictac_blue.gif) no-repeat 0 10px ;
+	padding-left:1em;
+	list-style:auto;
+	margin-left:-1em;
+  }  
+  table {
+	border: 1px solid black;
   }
-  
   </style>
 </head>
 <body>
-<div id="test"></div>
 	<div class = "side">
 		<div class="widget-content"><div id="divrc"></div>
-	<script type="text/javascript" src="rc30_ch.js"></script>
+	<script type="text/javascript" src="rc31_ch.js"></script>
 	<script>
-		// User Settings
 		rcPreSetting.base.domainName = 'lvchen.blogspot.com';
 		rcPreSetting.base.perPage = 3;
-		rcPreSetting.base.cache = 40;
-		rcPreSetting.base.delay = 0;
+		rcPreSetting.base.cache = 30;
+		rcPreSetting.mode.showDeleted = false;
+		// rcPreSetting.text.hideAll = '<img src="closeall.png"/>&nbsp;';
+		// rcPreSetting.text.showAll = '<img src="openall.png"/>&nbsp;';
+		// rcPreSetting.text.sortByTime = '<img src="sortbytime.png"/>&nbsp;';
+		// rcPreSetting.text.sortByPost = '<img src="sortbypost.png"/>&nbsp;';
+		// rcPreSetting.text.goBack = '<img title="go back" src="back.png"/>';
+		//rcPreSetting.img.fold = 'rc_0609_f.gif';
+		//rcPreSetting.img.unfold = 'rc_0609_uf.gif';		
+		rcPreSetting.img.fold = '<span style="font-Size:0.55em;border:outset 1px;">&nbsp;+&nbsp;</span>';
+		rcPreSetting.img.unfold = '<span style="font-Size:0.65em;border:inset 1px;">&nbsp;-&nbsp;</span>';
+		rcPreSetting.img.reply = 'external.png';
+		//rcPreSetting.img.sLoading = 'sloading.gif';
 		rcPreSetting.text.loading = '<img src="2-0.gif"/>';
-		rcPreSetting.text.sLoading = '<img src="sloading.gif"/>';		
-		//rcPreSetting.text.goBack = '<img title="go back" src="back.png"/>';
-		//rcPreSetting.text.hideAll = '<img src="closeall.png"/>';
-		//rcPreSetting.text.showAll = '<img src="openall.png"/>';
-		//rcPreSetting.text.sortByTime = '<img src="sortbytime.png"/>';
-		//rcPreSetting.text.sortByPost = '<img src="sortbypost.png"/>';		
-		rcPreSetting.text.prevPage = '上一頁';
-		rcPreSetting.text.nextPage = '下一頁';		
-		rcPreSetting.text.fold = '留了言';
-		rcPreSetting.text.unfold = '留言說:';		
-		rcPreSetting.text.today = '今天';
-		rcPreSetting.text.deleted = '原文已被刪除';
-		rcPreSetting.text.noPost = '<p>沒有留言可以顯示</p>';
 		rcPreSetting.text.rangeSymbol = ' - ';
-		//rcPreSetting.text.error = '<p>我覺得你的網址打錯了喔！</p>';
-		rcPreSetting.img.fold = ['http://farm4.static.flickr.com/3628/3344324244_e7564e029a_o.gif','打開留言',''];
-		//rcPreSetting.img.fold = ['','[-]'];
-		rcPreSetting.img.unfold = ['http://farm4.static.flickr.com/3412/3344324240_b9f5159445_o.gif','關閉留言',''];
-		//rcPreSetting.img.unfold = ['123','[+]'];
-		rcPreSetting.img.reply = ['http://farm4.static.flickr.com/3336/3586376650_f8a3367bb2_o.png','直接去留言',''];
-		rcPreSetting.mode.showJumpButton = true;
-		rcPreSetting.mode.displayIndex =  true;
-		rcPreSetting.mode.showDeleted =  false;
-		rcPreSetting.mode.authorIsHomepage =  true;	
 		rcPreSetting.template.author = '<a href="%link%" title="%timestamp% &#65306; %short_content%">%author%</a>';
 		rcPreSetting.template.title = '<a href="%orgLink%">%g_szTitle%</a>';
-		rcPreSetting.template.comment = '&nbsp;&nbsp;%rcAuthorLinkFormat% 於 %rcTitleLinkFormat%%replyImg% %rcSay% &#12300;%content%&#12301; &nbsp; - (%timestamp%)';
-		//rcPreSetting.template.comment = '%rcAuthorLinkFormat% 於 %rcTitleLinkFormat%%replyImg% &nbsp;- %timestamp%';		
-		//rcPreSetting.template.comment = '%rcTitleLinkFormat%&nbsp;by %rcAuthorLinkFormat% (%timestamp%)';		
-		rcPreSetting.template.posts = '%rcpost% (%cNum%)';
-		rcPreSetting.template.date = 'yy-MM-DD';
-		rcPreSetting.template.footerMsg = '您正在看留言 %range%，共有 %totalNum% 則留言';
-		rcPreSetting.template.monthName = [];
-		//rcPreSetting.template.monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-		
-
-		//Inner Settings
+		rcPreSetting.template.comment = '%rcAuthorLinkFormat% 於 %rcTitleLinkFormat%%replyImg% %rcSay% &#12300;%content%&#12301; &nbsp; - (%timestamp%)';
+		//rcPreSetting.template.comment = '%rcAuthorLinkFormat% 於 %rcTitleLinkFormat%%replyImg% &nbsp;- %timestamp%';
+		// rcPreSetting.mode.date = '民國rYY年MM月DD日';
+		//rcPreSetting.mode.date = '';
+		//rcPreSetting.mode.date = 'yy-mm-dd';
+		rcPreSetting.mode.delay = 0;
+		//rcPreSetting.text.today = '';
 		//rcSetting.showAllFlag = true;
-		rcFnc.run();
+		//rcPreSetting.text.monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];		
+		rcPreSetting.text.sortByTime = '<span style="border:outset 3px;font-size:80%">時間排序</span>';
+		rcPreSetting.text.sortByPost = '<span style="border:outset 3px;font-size:80%">標題排序</span>';
+		rcPreSetting.text.hideAll = '<span style="border:inset 3px;font-size:80%">全部隱藏</span>';
+		rcPreSetting.text.showAll = '<span style="border:outset 3px;font-size:80%">全部展開</span>';
+		rcPreSetting.text.goBack = '<span style="border:outset 3px;font-size:80%">回上一層</span>';
+		//rcPreSetting.text.prevPage = '上一頁';
+		//rcPreSetting.text.nextPage = '下一頁';		
+		//rcPreSetting.text.sortByTime = '<span style="border:outset 3px;font-size:100%">&nbsp;X&nbsp;</span>';
+		//rcPreSetting.text.sortByPost = '<span style="border:outset 3px;font-size:100%">&nbsp;#&nbsp;</span>';
+		//rcPreSetting.text.hideAll = '<span style="border:inset 3px;font-size:100%">☻</span>';
+		//rcPreSetting.text.showAll = '<span style="border:outset 3px;font-size:100%">☺</span>';
+		//rcPreSetting.text.goBack = '<span style="font-size:150%">«««</span>';
+		rcPreSetting.text.prevPage = '     ▲     ';
+		rcPreSetting.text.nextPage = '     ▼     ';
 
-		//var lFold = document.createElement('span');
-		//lFold.innerHTML = '<img src ="123"/>';
-		//var imageOK = lFold.getElementsByTagName('img');
-		//document.getElementById('test').appendChild(lFold);
-		//var test = document.getElementById('test').getElementsByTagName('img');
-		//imageOK[0].onerror = function() {alert('');};
+		rcFnc.run();
+  </script>
 
 		
-  </script>
-  
-
-  
-	
 		</div>
 		
 	</div>
 	
 </body>
+</html>
