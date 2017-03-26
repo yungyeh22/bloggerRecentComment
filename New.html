@@ -1,0 +1,104 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  	<script type="text/javascript" src="jquery-1.4.1.min.js"></script>
+  <style>
+  li {
+	list-style-image: url("http://www.blogblog.com/tictac_blue/tictac_blue.gif");
+	/*padding-left: 10px;*/
+  }
+  .block { 
+    border: 2px solid #0090DF;
+    background-color: #68BFEF;
+    width: 150px; 
+    height: 70px;
+    margin: 10px; 
+  }
+  .side {
+	width: 320px;
+  }
+  #divrc {
+	font-size:100%;
+  }
+  
+  #divrc li{
+	/*text-indent:-1em;
+	list-style:none;*/
+  }
+  #divrc .rcfold	{
+	/*margin-right:5px;*/
+  }
+  
+  </style>
+</head>
+<body>
+<div id="test"></div>
+	<div class = "side">
+		<div class="widget-content"><div id="divrc"></div>
+	<script type="text/javascript" src="rc30_ch.js"></script>
+	<script>
+		// User Settings
+		rcPreSetting.base.domainName = 'lvchen.blogspot.com';
+		rcPreSetting.base.perPage = 3;
+		rcPreSetting.base.cache = 40;
+		rcPreSetting.base.delay = 0;
+		rcPreSetting.text.loading = '<img src="2-0.gif"/>';
+		rcPreSetting.text.sLoading = '<img src="sloading.gif"/>';		
+		//rcPreSetting.text.goBack = '<img title="go back" src="back.png"/>';
+		//rcPreSetting.text.hideAll = '<img src="closeall.png"/>';
+		//rcPreSetting.text.showAll = '<img src="openall.png"/>';
+		//rcPreSetting.text.sortByTime = '<img src="sortbytime.png"/>';
+		//rcPreSetting.text.sortByPost = '<img src="sortbypost.png"/>';		
+		rcPreSetting.text.prevPage = '上一頁';
+		rcPreSetting.text.nextPage = '下一頁';		
+		rcPreSetting.text.fold = '留了言';
+		rcPreSetting.text.unfold = '留言說:';		
+		rcPreSetting.text.today = '今天';
+		rcPreSetting.text.deleted = '原文已被刪除';
+		rcPreSetting.text.noPost = '<p>沒有留言可以顯示</p>';
+		rcPreSetting.text.rangeSymbol = ' - ';
+		//rcPreSetting.text.error = '<p>我覺得你的網址打錯了喔！</p>';
+		rcPreSetting.img.fold = ['http://farm4.static.flickr.com/3628/3344324244_e7564e029a_o.gif','打開留言',''];
+		//rcPreSetting.img.fold = ['','[-]'];
+		rcPreSetting.img.unfold = ['http://farm4.static.flickr.com/3412/3344324240_b9f5159445_o.gif','關閉留言',''];
+		//rcPreSetting.img.unfold = ['123','[+]'];
+		rcPreSetting.img.reply = ['http://farm4.static.flickr.com/3336/3586376650_f8a3367bb2_o.png','直接去留言',''];
+		rcPreSetting.mode.showJumpButton = true;
+		rcPreSetting.mode.displayIndex =  true;
+		rcPreSetting.mode.showDeleted =  false;
+		rcPreSetting.mode.authorIsHomepage =  true;	
+		rcPreSetting.template.author = '<a href="%link%" title="%timestamp% &#65306; %short_content%">%author%</a>';
+		rcPreSetting.template.title = '<a href="%orgLink%">%g_szTitle%</a>';
+		rcPreSetting.template.comment = '&nbsp;&nbsp;%rcAuthorLinkFormat% 於 %rcTitleLinkFormat%%replyImg% %rcSay% &#12300;%content%&#12301; &nbsp; - (%timestamp%)';
+		//rcPreSetting.template.comment = '%rcAuthorLinkFormat% 於 %rcTitleLinkFormat%%replyImg% &nbsp;- %timestamp%';		
+		//rcPreSetting.template.comment = '%rcTitleLinkFormat%&nbsp;by %rcAuthorLinkFormat% (%timestamp%)';		
+		rcPreSetting.template.posts = '%rcpost% (%cNum%)';
+		rcPreSetting.template.date = 'yy-MM-DD';
+		rcPreSetting.template.footerMsg = '您正在看留言 %range%，共有 %totalNum% 則留言';
+		rcPreSetting.template.monthName = [];
+		//rcPreSetting.template.monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		
+
+		//Inner Settings
+		//rcSetting.showAllFlag = true;
+		rcFnc.run();
+
+		//var lFold = document.createElement('span');
+		//lFold.innerHTML = '<img src ="123"/>';
+		//var imageOK = lFold.getElementsByTagName('img');
+		//document.getElementById('test').appendChild(lFold);
+		//var test = document.getElementById('test').getElementsByTagName('img');
+		//imageOK[0].onerror = function() {alert('');};
+
+		
+  </script>
+  
+
+  
+	
+		</div>
+		
+	</div>
+	
+</body>
