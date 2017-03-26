@@ -36,7 +36,7 @@ rcFunction.addHeaderButton = function ()
 {
 	var headerButton;
 
-	headerButton = '<div id="headerButton">	<a id ="showAllButton" href="javascript:rcFunction.showAll();">全部展開</a>	<form style= "display:inline;margin-left:1em" name="jumpForm" action="">跳至留言&nbsp;&nbsp;<input style="text-align:center; width:2em" type="text" name="itemJump" value="1"  onkeypress="if(window.event.keyCode==13) {rcFunction.gotoIndexIwant(itemJump.value); return false;}"/>&nbsp;<input id="jumpButton" type="button" value="我跳" onclick="rcFunction.gotoIndexIwant(itemJump.value);"/></form></div>';
+	headerButton = '<div id="headerButton">	<a id ="showAllButton" href="javascript:rcFunction.showAll();">全部展開</a>	<form style= "display:inline;margin-left:1em" name="jumpForm" action=""><span id="jumpSet">跳至留言&nbsp;&nbsp;<input style="text-align:center; width:2em" type="text" name="itemJump" value="1"  onkeypress="if(window.event.keyCode==13) {rcFunction.gotoIndexIwant(itemJump.value); return false;}"/>&nbsp;<input id="jumpButton" type="button" value="我跳" onclick="rcFunction.gotoIndexIwant(itemJump.value);"/></span></form></div>';
 	jQuery('#divrc').before(headerButton);
 };
 rcFunction.gotoIndexIwant = function (indexIwant)
@@ -95,7 +95,7 @@ rcFunction.fetchPostsTitle = function(Index, increment)
 //----------- Fetch posts JSON feed, several variables that is comments related are determine here ---------------
 //----------- Look for matched titles and show comments ---------------
 rcFunction.titleJSONfeed = function (posts)
-{
+{	var tempIndex = 0;
 	var temp = '<ul id="feedItemListDisplay">';
 	var checkLink = '' ;
 	var checkTitle = '';
@@ -134,7 +134,10 @@ rcFunction.titleJSONfeed = function (posts)
 	{
 		var comment = g_szComments[i]; // Extract comments from JSON
 		var content = comment.content.$t;   // The complete content of a comment.
-		var short_content = comment.title.$t; // short content = title , This is not a summary but can be use as one.
+		//blogger change the API, title missing. I use substring of content to create short_content  8/25/2007
+		var short_content = content.replace(/<.*?>/g,'');
+		if (short_content.length > 40)	
+		short_content = short_content.substr(0,40)+'...';
 		var link = comment.link[0].href; // author's link, use this link to look for original link of the post.
 		var iFind = link.indexOf('#'); // The index number for determining post link. 
 		
@@ -160,30 +163,37 @@ rcFunction.titleJSONfeed = function (posts)
 		}
 		else if (rcDateFormat == 2)
 			var timestamp=monthConvert(comment.published.$t.substr(5,2))+'&nbsp;'+comment.published.$t.substr(8,2);
-		// fix short_content masses up author display
-		short_content = short_content.replace(/"/gim,"&quot;"); 
+		short_content = short_content.replace(/"/gim,"&quot;"); // fix short_content masses up author display
 		// Create Authour's information 
 		var g_szAuthorsLink = rcAuthorLinkFormat;
 		g_szAuthorsLink = g_szAuthorsLink.replace(/#link#/,link);
 		g_szAuthorsLink = g_szAuthorsLink.replace(/#timestamp#/,timestamp);
-		g_szAuthorsLink = g_szAuthorsLink.replace(/#short_content#/, short_content);
 		g_szAuthorsLink = g_szAuthorsLink.replace(/#author#/, author);
+		g_szAuthorsLink = g_szAuthorsLink.replace(/#short_content#/, short_content);
 		// Create title information 
 		var g_orignalLink = rcTitleLinkFormat;
 		g_orignalLink = g_orignalLink.replace(/#orgLink#/,orgLink);
-		g_orignalLink = g_orignalLink.replace(/#short_content#/,short_content);
 		g_orignalLink = g_orignalLink.replace(/#g_szTitle#/,'<span class = rcPostTitle>' + g_szTitle + '</span>');
 		g_orignalLink = g_orignalLink.replace(/#timestamp#/,timestamp);
+		g_orignalLink = g_orignalLink.replace(/#short_content#/,short_content);
 		var expendStyle= '<span class="rcfold" title="展開">&nbsp;&nbsp;&nbsp;</span> ';
 		// Finally, create the comment list
 		temp += '<li>'+ expendStyle;
 		temp += createDisplayFormat;
-		temp = temp.replace(/#rcAuthorLinkFormat#/,g_szAuthorsLink);
-		temp = temp.replace(/#rcTitleLinkFormat#/,g_orignalLink);
-		temp = temp.replace(/#rcSay#/,'<span class="rcsay">'+rcFoldImage[1]+'</span>');
-		temp = temp.replace(/#(\S+)content(\S+)#/, '<span class="comcontent">$1'+content+'$2</span>');
-		temp = temp.replace(/#timestamp#/,'<span class="rcTimeStamp">' + timestamp + '</span>');	
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#rcAuthorLinkFormat#/,g_szAuthorsLink);
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#rcTitleLinkFormat#/,g_orignalLink);
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#rcSay#/,'<span class="rcsay">'+rcFoldImage[1]+'</span>');
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#timestamp#/,'<span class="rcTimeStamp">' + timestamp + '</span>');
+		if (temp.substr(tempIndex,temp.length-tempIndex).search(/#(\S+)content(\S+)#/)!=-1)
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#(\S+)content(\S+)#/, '<span class="comcontent">$1'+content+'$2</span>');
+		else if (temp.substr(tempIndex,temp.length-tempIndex).search(/#content(\S+)#/)!=-1)
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#content(\S+)#/, '<span class="comcontent">'+content+'$1</span>');
+		else if (temp.substr(tempIndex,temp.length-tempIndex).search(/#(\S+)content#/)!=-1)
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#(\S+)content#/, '<span class="comcontent">$1'+content+'</span>');
+		else
+		temp = temp.substr(0,tempIndex)+temp.substr(tempIndex,temp.length-tempIndex).replace(/#content#/, '<span class="comcontent">'+ content +'</span>');
 		temp += '</li>';
+		tempIndex = temp.length;
 	}
 	temp+='</ul>';   
 	jQuery('#divrc').html(temp);
@@ -322,13 +332,13 @@ rcFunction.RunAfterDomReady = function ()
 			var comment = jQuery(this).parent().find('.comcontent');
 			if (comment.is(':visible')) {
 				jQuery(this).css('background','url(' + rcFoldImage[0] + ') center no-repeat').attr("title","展開");
-				jQuery(this).parent().find('.rcsay').text(rcFoldImage[1]);
+				jQuery(this).parent().find('.rcsay').html(rcFoldImage[1]);
 				comment.hide();
 			} 
 			else 
 			{
 				jQuery(this).css('background','url(' + rcFoldImage[2] +') center no-repeat').attr("title","收合");
-				jQuery(this).parent().find('.rcsay').text(rcFoldImage[3]);
+				jQuery(this).parent().find('.rcsay').html(rcFoldImage[3]);
 				comment.show();
 			}
 				});
@@ -339,6 +349,7 @@ rcFunction.hideAll = function()
 	jQuery('.comcontent').hide();
 	jQuery('.rcfold').css('background','url(http://lvchen716.googlepages.com/0609_f.gif) center no-repeat');
 	jQuery('#headerButton a:eq(0)').attr('href','javascript:rcFunction.showAll();').text('全部展開');
+	jQuery('#divrc .rcsay').html(rcFoldImage[1]);
 	rcSetting.showAllFlag = 0;
 };
 rcFunction.showAll = function()
@@ -346,6 +357,7 @@ rcFunction.showAll = function()
 	jQuery('.comcontent').show();
 	jQuery('.rcfold').css('background','url(http://lvchen716.googlepages.com/0609_uf.gif) center no-repeat');
 	jQuery('#headerButton a:eq(0)').attr('href','javascript:rcFunction.hideAll();').text('全部隱藏');
+	jQuery('#divrc .rcsay').html(rcFoldImage[3]);
 	rcSetting.showAllFlag = 1;
 };
 //----------- Callback function for 下一頁 ---------------
